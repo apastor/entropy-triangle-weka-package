@@ -9,8 +9,8 @@ This package is an implementation for Weka of the work of this papers:
  PLoS ONE 9(1).](http://dx.doi.org/10.1371/journal.pone.0084217)
  
 * [Valverde-Albacete, F. J., & Peláez-Moreno, C. (2010).
- * Two information-theoretic tools to assess the performance of multi-class classifiers.
- * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.](http://dx.doi.org/10.1016/j.patrec.2010.05.017)
+ Two information-theoretic tools to assess the performance of multi-class classifiers.
+ Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.](http://dx.doi.org/10.1016/j.patrec.2010.05.017)
 
 ## BUILD
 
@@ -18,7 +18,9 @@ To build the project from source use ant from this directory.
 It's necessary to specify the project build file (build_package.xml) and the weka.jar as library. 
 Optionally you can set the build command, make_package is the default one.
 
-NOTE: The package has been tested to build and run under Oracle and OpenJDK v1.7 or later.
+### Requirements
+- Java 1.7 or later
+- Weka 3.7.12
 
 $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
 
