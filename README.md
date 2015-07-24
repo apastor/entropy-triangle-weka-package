@@ -22,8 +22,9 @@ Optionally you can set the build command, make_package is the default one.
 - Java 1.7 or later
 - Weka 3.7.12
 
+```bash
 $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
-
+```
 
 ## INSTALL
 
