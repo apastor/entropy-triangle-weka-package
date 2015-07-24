@@ -31,7 +31,9 @@ $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
 To install the package on Weka use the Weka Package Manager GUI
 or use the package manager from the command line as follows:
 
+```bash
 # Add weka.jar to claspath
 $ export CLASSPATH=${CLASSPATH}:<path-to>/weka.jar
 
 $ java weka.core.WekaPackageManager -install-package EntropyTriangle.zip
+```
