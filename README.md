@@ -18,13 +18,13 @@ To build the project from source use ant from this directory.
 It's necessary to specify the project build file (build_package.xml) and the weka.jar as library. 
 Optionally you can set the build command, make_package is the default one.
 
-### Requirements
-- Java 1.7 or later
-- Weka 3.7.12
-
 ```bash
 $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
 ```
+
+### Requirements
+- Java 1.7 or later
+- Weka 3.7.12
 
 ## INSTALL
 
