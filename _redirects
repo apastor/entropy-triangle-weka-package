@@ -1,3 +1,3 @@
-Redirect /download https://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
-Redirect /download.html https://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
+Redirect /download http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
+Redirect /download.html http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
 
