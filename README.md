@@ -25,7 +25,7 @@ To install the plugin on Weka you can use either the Weka Package Manager GUI or
 ### GUI
 1. In the Weka GUI Chooser, the main Weka window that opens on the program startup, go to the **Tools** menu and open the **Package manager**
 2. On the top-right corner of the Package manager window click the **File/URL** button.
-3. Click the **Browse...** button to select your already downloaded EntropyTriangle.zip file or paste the file URL from the *release* section.
+3. Click the **Browse...** button to select your already downloaded `EntropyTriangle.zip` file or paste the file URL from the *release* section.
 4. Restart Weka before using the plugin.
 
 ### Command-line
@@ -39,7 +39,7 @@ $ java weka.core.WekaPackageManager -install-package EntropyTriangle.zip
 ## BUILD
 To build the package from source use [Apache Ant](http://ant.apache.org/) from the project root directory. 
 It is necessary to specify the project build file (build_package.xml) and the weka.jar as library. 
-Optionally you can set the build command, make_package is the default one.
+Optionally you can set the build command, `make_package` is the default one.
 
 ```bash
 $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
