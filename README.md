@@ -38,7 +38,7 @@ $ java weka.core.WekaPackageManager -install-package EntropyTriangle.zip
 
 ## BUILD
 To build the package from source use [Apache Ant](http://ant.apache.org/) from the project root directory. 
-It is necessary to specify the project build file (build_package.xml) and the weka.jar as library. 
+It is necessary to specify the project build file `build_package.xml` and `weka.jar` as library. 
 Optionally you can set the build command, `make_package` is the default one.
 
 ```bash
