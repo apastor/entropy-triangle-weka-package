@@ -29,7 +29,7 @@ To install the plugin on Weka you can use either the Weka Package Manager GUI or
 4. Restart Weka before using the plugin.
 
 ### Command-line
-```bash
+```console
 # Add weka.jar to classpath
 $ export CLASSPATH=${CLASSPATH}:<path-to>/weka.jar
 
@@ -41,6 +41,6 @@ To build the package from source use [Apache Ant](http://ant.apache.org/) from t
 It is necessary to specify the project build file `build_package.xml`, and `weka.jar` as a library. 
 Optionally you can set the build command, `make_package` is the default one.
 
-```bash
+```console
 $ ant -f ./build_package.xml -lib <path-to>/weka.jar make_package
 ```
