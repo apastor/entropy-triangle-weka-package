@@ -1,2 +1,33 @@
+layout: default
+
+# Site settings
+title: Entropy Triangle Weka package
+slogan: A set of information-theoretic tools for the assessment of classifiers in Weka
+description: > # this means to ignore newlines until "baseurl:"
+  The Entropy Triangle is a plugin for the Weka machine learning suite with a set of information-theoretic
+  tools for the assessment of classifiers. It adds new evaluation metrics and a visualization
+  where to compare the performance of different classifiers and datasets combinations.
+baseurl: "/entropy-triangle-weka-package" # the subpath of your site, e.g. /blog/
+url: "http://apastor.github.io" # the base hostname & protocol for your site
+
+author :
+  name : Antonio Pastor
+#  email : blah@email.test
+  github : apastor
+#  twitter : username
+
+include: ['_pages']  
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
+  use_coderay: true
+#  syntax_highlighter: coderay
+  coderay_line_numbers: nil
+#  coderay_css: styles
+
+
 gems:
   - jekyll-redirect-from
