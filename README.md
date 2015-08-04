@@ -1,7 +1,7 @@
 # entropy-triangle-weka-package
 A set of information-theoretic tools for the assessment of classifiers in Weka.
 
-This package is an implementation of the work of this papers:
+This package is an implementation of the work of these papers:
 
 * [Valverde-Albacete, F. J., & Peláez-Moreno, C. (2014).
  100% classification accuracy considered harmful:
