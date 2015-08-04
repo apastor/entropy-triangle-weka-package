@@ -5,15 +5,14 @@ layout: default
 description: "feature overview"
 
 ---
-{:.center}
-# Entropy Triangle Weka package
-.center {
-  text-align: center;
-}
+
+{% include JB/setup %}
+
+<h1 style="text-align:center;">Entropy Triangle Weka package</h1>
 
 A set of information-theoretic tools for the assessment of classifiers in Weka.
 
-This package is an implementation of the work of this papers:
+This package is an implementation of the work of these papers:
 
 * [Valverde-Albacete, F. J., & Peláez-Moreno, C. (2014). 100% classification accuracy considered harmful: The normalized information transfer factor explains the accuracy paradox. PLoS ONE 9(1).](http://dx.doi.org/10.1371/journal.pone.0084217)
  

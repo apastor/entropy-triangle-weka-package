@@ -19,15 +19,17 @@ author :
 include: ['_pages']  
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
+highlighter: pygments
 
-kramdown:
-  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
-  use_coderay: true
-#  syntax_highlighter: coderay
-  coderay_line_numbers: nil
-#  coderay_css: styles
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
 
+#kramdown:
+#  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
+#  use_coderay: true
+#  syntax_highlighter: pygments
+#  coderay_line_numbers: nil
 
-gems:
-  - jekyll-redirect-from
+#gems:
+#  - jekyll-redirect-from

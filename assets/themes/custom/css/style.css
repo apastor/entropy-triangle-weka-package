@@ -1,4 +1,7 @@
 /* Override some defaults */
+code {
+  background-color: #fff;
+}
 html, body {
   background-color: #eee;
 }
@@ -68,4 +71,3 @@ body {
 	border:1px solid #4C964D;
 	color:#FFF;
 }
-	
