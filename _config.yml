@@ -10,20 +10,29 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "/entropy-triangle-weka-package" # the subpath of your site, e.g. /blog/
 url: "http://apastor.github.io" # the base hostname & protocol for your site
 
+latest-package-url: http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
+
 author :
   name : Antonio Pastor
 #  email : blah@email.test
   github : apastor
 #  twitter : username
 
-include: ['_pages']  
+include: ['_pages']
 
 # Build settings
 markdown: redcarpet
 highlighter: pygments
 
 redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
+  extensions:
+   - no_intra_emphasis
+   - fenced_code_blocks
+   - disable_indented_code_blocks
+   - autolink
+   - strikethrough
+   - with_toc_data
+   - lax_spacing
 
 #kramdown:
 #  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
@@ -31,5 +40,5 @@ redcarpet:
 #  syntax_highlighter: pygments
 #  coderay_line_numbers: nil
 
-#gems:
-#  - jekyll-redirect-from
+gems:
+  - jekyll-redirect-from
