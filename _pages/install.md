@@ -12,9 +12,9 @@ weight: 1
 To install the Entropy Triangle package on Weka you can use the Weka Package Manager. If you are in a Unix environment you can do it faster with the [command line](#command-line).
 
 **The [EntropyTriangle.zip package]({{ site.latest-package-url }}) is cross-platform**.
-You can install on Weka independently of you operating system.
+You can install it on Weka independently of you operating system.
 The only **requirements** are that you have **Java** (if you already have Weka running you have it),
-and a recent release of development version of **[Weka](http://www.cs.waikato.ac.nz/~ml/weka/) (>=3.7.8)**
+and a recent release of the development version of **[Weka](http://www.cs.waikato.ac.nz/~ml/weka/) (>=3.7.8)**
 
 
 ### Package Manager GUI
@@ -31,7 +31,7 @@ and a recent release of development version of **[Weka](http://www.cs.waikato.ac
 
         - Click the **Browse...** button to select an already downloaded file.
 
-        - Paste in the text box the URL to the package zip file from the [*release* section](https://github.com/apastor/entropy-triangle-weka-package/releases/latest) of the github repository.
+        - Paste in the text box the URL to the package zip file from the [*release* section](https://github.com/apastor/entropy-triangle-weka-package/releases/latest) of the project github.
 
     ![]({{ site.baseurl }}/assets/img/weka-fileWindow.png)
 
