@@ -29,8 +29,8 @@ Once loaded the data, the Entropy Triangle can be used interactively.
 However, you can customize your plot or set more things with code. For that,
 see the [package API]({{ site.baseurl/api/}}).
 
-For a more detailed explanation on using Weka with code, see the [Weka wiki programmatic-use page](https://weka.wikispaces.com/Programmatic+Use) and
-the [Weka API of the developer version (3.7)](http://weka.sourceforge.net/doc.dev/).
+For a more detailed explanation on using Weka with code, see the Weka wiki pages for [programmatic-use](https://weka.wikispaces.com/Programmatic+Use) and how to [use Weka in your Java code](https://weka.wikispaces.com/Use+Weka+in+your+Java+code).
+Also, the [Weka API of the developer version (3.7)](http://weka.sourceforge.net/doc.dev/).
 
 
 All the code of this example goes on the same file, [MyExperiment.java]({{site.baseurl}}/programmatic-use/MyExperiment.html).
@@ -175,7 +175,7 @@ We can append the -classpath option to the javac and java commands or append the
 * Windows
 
 	```bash
-	> set CLASSPATH=%CLASSPATH%;<path-to>/weka.jar
+	> set CLASSPATH=%CLASSPATH%;.;%PROGRAMFILES%/Weka-3-7/weka.jar
 	> set CLASSPATH=%CLASSPATH%;%USERPROFILE%/wekafiles/packages/EntropyTriangle/EntropyTriangle.jar
 	```
 

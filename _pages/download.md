@@ -8,7 +8,7 @@ weight: 3
 #redirect_to: http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
 ---
 
-* Direct link to the Entropy Triangle Weka package <a href="{{ site.latest-package-url }}" download>EntropyTriangle.zip</a>
+* Direct link to the Entropy Triangle Weka package: <a href="{{ site.latest-package-url }}" download>EntropyTriangle.zip</a>
 
 * Project page on Github: https://github.com/apastor/entropy-triangle-weka-package
 
