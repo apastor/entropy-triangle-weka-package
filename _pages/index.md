@@ -20,14 +20,15 @@ description: "package features"
 * **New evaluation metrics** for the standard output of Weka.
   * Entropy Modulated Accuracy (EMA)
 
-        The EMA is a pessimistic estimate of the accuracy with the  with the influence of the input distribution factored out. It is defined mathematically as the inverse of the remaining perplexity after the learning process
+        The EMA is a pessimistic estimate of the accuracy with the influence of the input distribution factored out. It is defined mathematically as the inverse of the remaining perplexity after the learning process
 
     $$ EMA = \frac{1}{PP_{X|Y}} = \frac{1}{2^{H_{X|Y}}} $$
 
 
   * Normalized Information Transfer factor (NIT factor).
 
-        A measure of how efficient is the transmission of information from the input to the output set of classes.
+        A measure of how efficient is the transmission of information from the input to the output of the classifier
+        
     $$ NIT_{factor} = \frac{\mu_{XY}}{k} $$
         where \(k\) is the number of classes.
 
