@@ -17,7 +17,7 @@ description: "package features"
 
 ## Features
 
-* **Visualization Plugin** with an **exploratory data analysis method** for an easy, but complete and reliable comparison of classifiers performance.
+* **Visualization Plugin** with an [**exploratory data analysis method**](#theoretical-background) for an easy, but complete and reliable comparison of classifiers performance.
 
     The Entropy Triangle is based on a balance equation of entropies.
     Represents normalized values of the variation of information, the mutual information, and the increment of entropy from the uniform distribution in a ternary plot. This lets you analyze at a glance different scenarios without loss of information.
