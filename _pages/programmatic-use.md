@@ -11,30 +11,30 @@ weight: 2.2
 {% include JB/setup %}
 
 A good way to configure a Weka experiment is through Java code,
-we can setup a complete experiment with only few lines of code.
-This, let us play with the data modifying only the parts we want and
+with only few lines of code we can setup a complete experiment.
+This let us play with the data modifying only the needed parts, and
 conserve the configuration to reproduce the experiment.
 
 Both, the Entropy Triangle visualization and the new metrics can be used through code.
-In the next section we are going to see in a simple example how to add data to the Entropy Triangle.
-And, in the last section, [how to print an evaluation report including the package metrics](#printing-the-plugin-metrics).
+The next section shows a simple example of how to add data to the Entropy Triangle,
+and the last section [how to print an evaluation report including the package metrics](#printing-the-plugin-metrics).
+
+### Additional requirement
+
+This method requires the **Java Development Toolkit (JDK)** to compile the source files.
 
 ## The Entropy Triangle from code
 
-In this example we are going to load a dataset that has already been splitted in two files,
-one to train the classifiers and the other to evaluate them.
-Then, we will add the evaluation data to the Entropy Triangle.
+In this example we are going to train and evaluate four classifiers with the segment dataset that is included with Weka.
+This dataset comes already splitted in two files for the train and test sets.
+Finally, we add the evaluation data to the Entropy Triangle to use it interactively.
 
-Once loaded the data, the Entropy Triangle can be used interactively.
-However, you can customize your plot or set more things with code. For that,
-see the [package API]({{ site.baseurl/api/}}).
+All the code of this example goes in the same file, [MyExperiment.java]({{site.baseurl}}/programmatic-use/MyExperiment.html).
+We divided it in several boxes for illustration.
+
 
 For a more detailed explanation on using Weka with code, see the Weka wiki pages for [programmatic-use](https://weka.wikispaces.com/Programmatic+Use) and how to [use Weka in your Java code](https://weka.wikispaces.com/Use+Weka+in+your+Java+code).
 Also, the [Weka API of the developer version (3.7)](http://weka.sourceforge.net/doc.dev/).
-
-
-All the code of this example goes on the same file, [MyExperiment.java]({{site.baseurl}}/programmatic-use/MyExperiment.html).
-We have divided it in several boxes for illustration.
 
 ### MyExperiment.java
 

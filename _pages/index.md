@@ -17,6 +17,18 @@ description: "package features"
 
 ## Features
 
+* **Visualization Plugin** with an **exploratory data analysis method** for an easy, but complete and reliable comparison of classifiers performance.
+
+    The Entropy Triangle is based on a balance equation of entropies.
+    Represents normalized values of the variation of information, the mutual information, and the increment of entropy from the uniform distribution in a ternary plot. This lets you analyze at a glance different scenarios without loss of information.
+
+  * Panel with **colorbar** (or labels) for the chosen metric (or classifier/dataset information)
+  * **Tooltips** with detailed information hovering graph elements
+  * Delete elements of the graph with a *right-click* context menu
+  * **Save and load graph data** in arff format
+  * **Export data to csv or json**
+  * **Print the graph** with *Ctrl+Shft+Alt+Left Mouse Click*
+
 * **New evaluation metrics** for the standard output of Weka.
   * Entropy Modulated Accuracy (EMA)
 
@@ -28,7 +40,7 @@ description: "package features"
   * Normalized Information Transfer factor (NIT factor).
 
         A measure of how efficient is the transmission of information from the input to the output of the classifier
-        
+
     $$ NIT_{factor} = \frac{\mu_{XY}}{k} $$
         where \(k\) is the number of classes.
 
@@ -51,19 +63,6 @@ description: "package features"
 
   * Variation of information
     $$ VI = H_{X|Y} + H_{Y|X} $$
-
-
-* **Visualization Plugin** for an easy, but complete and reliable comparison of classifiers performance.
-
-    The Entropy Triangle is based on a entropy balance equation.
-    Represents normalized values of the variation of information, the mutual information, and the increment of entropy from the uniform distribution in a ternary plot. This lets you compare different scenarios at a glance without loss of information.
-
-  * Panel with **colorbar** (or labels) for the chosen metric (or classifier/dataset information)
-  * **Tooltips** with detailed information hovering graph elements
-  * Delete elements of the graph with a *right-click* context menu
-  * **Save and load graph data** in arff format
-  * **Export data to csv or json**
-  * **Print the graph** with *Ctrl+Shft+Alt+Left Mouse Click*
 
 
 ---
