@@ -42,7 +42,7 @@ description: "package features"
         A measure of how efficient is the transmission of information from the input to the output of the classifier
 
     $$ NIT_{factor} = \frac{\mu_{XY}}{k} $$
-        where \(k\) is the number of classes.
+        where *k* is the number of classes.
 
 * Optional **advanced information-theoretic metrics**.
   * Class perplexity
