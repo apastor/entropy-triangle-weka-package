@@ -65,18 +65,53 @@ import weka.gui.visualize.PrintablePanel;
 
 /**
  * This panel coordinates the different elements of the Entropy Triangle plot.
- * </br></br>
+ * <br><br>
  * Inherits from the {@link PrintablePanel} the possibility to print the panel to various file formats.
- * The Print dialog is accessible via Ctrl-Shift-Left Mouse Click.
+ * The Print dialog is accessible via Ctrl+Alt+Shift+"Left Mouse Click".
  * 
- * </br></br>
- * For more information about the Entropy Triangle, see<br/>
- * <br/>
+ * <br><br>
+ * For more information about the Entropy Triangle, see<br>
+ * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  * 
+ * <br><br>
+ * To use the Entropy Triangle from Java code it is needed to train and evaluate the classifiers before adding the data to the plot,
+ * like in the following example:
+ * <pre>
+ * <code>
+ * 	public static void main(String[] args) {
+ *
+ *		JFrame frame = new JFrame();
+ *		EntropyTrianglePanel et = new EntropyTrianglePanel();
+ *
+ *		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ *		frame.add(et);
+ *		frame.setVisible(true);
+ *		frame.pack();
+ *
+ *		try {
+ *			DataSource source = new DataSource("./datasets/segment-challenge.arff");
+ *			Instances train = source.getDataSet();
+ *			Instances test = DataSource.read("./datasets/segment-test.arff");
+ *			train.setClassIndex(train.numAttributes() - 1);
+ *			test.setClassIndex(test.numAttributes() - 1);
+ *
+ *			weka.classifiers.rules.ZeroR zr = new weka.classifiers.rules.ZeroR();
+ *			zr.buildClassifier(train);
+ *			Evaluation eval = new Evaluation(train);
+ *			eval.evaluateModel(zr, test);
+ *			et.addData(eval, zr, test.relationName(), null);
+ *
+ *		} catch (Exception e) {
+ *			System.out.println("Error on main");
+ *			e.printStackTrace();
+ *		}
+ *	}
+ *</code>
+ * </pre>
  * @author Antonio Pastor
  *
  */
@@ -90,7 +125,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 	private JPanel buttonPanel, plotPanel, colorBarPanel;
 	private JComboBox<String> currentMetric;
 	private JToggleButton toggleSplit;
-	private JToggleButton toggleBaseline; // Baseline is "H(Px) = k" line
+	private JToggleButton toggleBaseline; // Baseline is H(Px) line
 	private JButton ioButton;
 	
 	private DataInstances dataList = null;
@@ -106,7 +141,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 				setSplit(state);
 			}
 		});
-		toggleBaseline = new JToggleButton ("H(Px) = k line");
+		toggleBaseline = new JToggleButton ("\u0394" + "H'(x) line");
 		toggleBaseline.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -217,8 +252,8 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 	 * @param ev performed evaluation on the <code>classifier</code> for the relation named <code>str_dataser</code>  
 	 * @param classifier the evaluated classifier
 	 * @param str_dataset the name of the evaluated relation
-	 * @param str_time a string for the time attribute, if <code>null</code> is passed
-	 * a new string with the current timestamp will be generated
+	 * @param str_time a string for the time attribute. If <code>null</code>,
+	 * a string with the current timestamp will be generated.
 	 * @throws Exception on errors calculating metrics from the <code>Evaluation</code> object
 	 */
 	//str_time can be null, then current timestamp will be added
@@ -356,6 +391,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 			if (bs.checkLabel(instance.label)) {
 				if(bs.removeLabel(instance.label)==0) {
 					bsline.remove(bs);
+					plot.remove(bs);
 				}
 				break;
 			}
@@ -434,7 +470,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 	
 	private void addBaseline(DataInstance d) {
 		for (Baseline bs: bsline) {
-			if (Math.abs(bs.getXPlotCoord()-d.normInc_H_Px)<=0.001) {
+			if (Math.abs(bs.getXPlotCoord()-d.normInc_H_Px)<=0.005) {
 				bs.addLabel(d.label);
 				return;
 			}

@@ -33,13 +33,29 @@ import weka.core.Utils;
 
 /**
  * Information theoretic evaluation metric for classifiers.
- * The class perplexity can be interpreted as the number of effective classes at the input of the classifier.
- * This is defined as \( k_X = 2^{H_{P_X}} \) where \( H_{P_X} \) is the entropy of the input classes probability.
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ * The class perplexity can be interpreted as the number of effective classes at the input of the classifier due to the likelihood of the input distribution.
+ * This is defined as
+ * 
+ * \[ PP_X = 2^{H_X} \]
+ *
+ * where \( H_X \) is the entropy of the likelihood of the classes.
+ * 
+ * \( PP_X = k \), the number of classes,  when \( X \) is uniform. In general \(1 \leq PP_X \leq k \)
+ * 
+ * <br><br>
+ * For more information, see
+ * <br><br>
+ * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
+ * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
+ * 100% classification accuracy considered harmful:
+ * The normalized information transfer factor explains the accuracy paradox.
+ * PLoS ONE 9(1).</a>
+ *
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
  * 

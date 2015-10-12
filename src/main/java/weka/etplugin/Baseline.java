@@ -37,12 +37,11 @@ import javax.swing.JColorChooser;
 import javax.swing.border.EmptyBorder;
 
 /**
- * This class plots a line in a Ternary plot that represent a value of the bottom axis.
- * </br></br>
- * The color of the line can be changed interactively clicking on it.
- * </br></br>
- * The Baseline shows a "tooltip" window on mouse hover with info about it values and the stored labels.
- * </br></br>
+ * This class plots a line in a {@code TernaryPlot} that represents a value of the bottom axis.
+ * <br><br>
+ * The line shows a tooltip on mouse hover with info of its values and the stored labels,
+ * and its color can be changed by clicking the line.
+ * <br><br>
  * The parent object should have defined an {@link AffineTransform} with the
  * origin of the plot at the origin of coordinates to place the element correctly.
  * 
@@ -132,20 +131,18 @@ public class Baseline extends PlotElement {
 //			System.out.println(Line2D.ptSegDist(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), x, y));
 			if (Line2D.ptSegDist(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), x+getX(), y+getY())<2) {
 				return true;
-			} else {
-				return false;
 			}
+			return false;
 		}
 		// The parent not being a Ternary Plot instance is not contemplated
 		if (line.ptSegDist(x, y)<5) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 	
 	/**
-	 * Adds a label to the label list. Updates the tooltip window to show information of the new label.
+	 * Adds a label to the label list. Updates the tooltip to show information of the new label.
 	 * 
 	 * @param label a string that identifies the new data this label is going to represent
 	 */

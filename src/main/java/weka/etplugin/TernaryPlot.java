@@ -46,8 +46,8 @@ import javax.swing.JPanel;
  * To transform the Java coordinates to the plot coordinates it uses an {@link AffineTransform}.
  * The axes normalized to the range (0,1) and the children objects are plotted in the order specified by the 
  * {@link PlotElement} interface.
- * </br></br>
- * Children objects that do not implement the PlotElement interface are drawn on the bottom.
+ * <br><br>
+ * Children objects that do not implement the PlotElement interface are drawn at the bottom.
  * 
  * @author Antonio Pastor
  * @see AffineTransform
@@ -94,6 +94,7 @@ public class TernaryPlot extends JPanel {
 	
 	
 	private ComponentAdapter resizeListener = new ComponentAdapter (){
+		@Override
 		public void componentResized(ComponentEvent e){
 			Component[] comps = getComponents();
 			for (Component c: comps){
@@ -101,6 +102,7 @@ public class TernaryPlot extends JPanel {
 					c.setBounds(getBounds());
 			}
 		}
+		@Override
 		public void componentMoved(ComponentEvent e){
 			Component[] comps = getComponents();
 			for (Component c: comps){
@@ -130,6 +132,7 @@ public class TernaryPlot extends JPanel {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 		
 		scale = (int) Math.min(getWidth()/1.2, getHeight()/1.2);
 		if (scale<TernaryPlot.MINPLOTWIDTH)
@@ -137,7 +140,7 @@ public class TernaryPlot extends JPanel {
 		// Scale the panel to plot from 0 to 1
 		aff_plot = AffineTransform.getScaleInstance(scale, scale);
 		// translation to have some margin on origin of axes
-		aff_plot.concatenate(new AffineTransform(1, 0, 0, -1, 0.10, 0.95));
+		aff_plot.concatenate(new AffineTransform(1, 0, 0, -1, (getWidth()*0.5/scale)-0.5, 0.95));
 		aff_default = g2D.getTransform();
 		
 		AffineTransform aff_g2D = (AffineTransform) aff_default.clone();

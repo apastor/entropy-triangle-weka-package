@@ -33,19 +33,28 @@ import weka.core.Utils;
 
 /**
  * Information theoretic evaluation metric for classifiers.
- * The Remaining Perplexity is the remaining perplexity at the output of the classifier.
- * It can be interpreted as the residual uncertainty after the learning process.
- * The lower the better, and its minimum value is 1 if there is no uncertainty.
+ * The Remaining Perplexity represents the residual difficulty for the classification task after the learning process
  * 
- * \[ k_{X|Y} = 2^{H_{P_{X|Y}}} \]
+ * \[ PP_{X|Y} = 2^{H_{X|Y}} \]
  * 
- * Where \( H_{P_{X|Y}} \) is the entropy of at the input of the classifier given the output.
+ * Where \( H_{X|Y} \) is the entropy of the input probability distribution given the output,
+ * and measures the information that the classifier failed to learn.
  * 
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ * The minimum \( PP_{X|Y} \) is one, meaning no remaining difficulty.
+ * <br><br>
+ * For more information, see
+ * <br><br>
+ * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
+ * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
+ * 100% classification accuracy considered harmful:
+ * The normalized information transfer factor explains the accuracy paradox.
+ * PLoS ONE 9(1).</a>
+ *
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
  * 

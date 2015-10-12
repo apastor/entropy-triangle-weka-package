@@ -1,18 +1,18 @@
 /*
  *   This file is part of entropy-triangle-weka-package.
- *   
+ *
  *   Copyright (C) 2015  Antonio Pastor
- *   
+ *
  *   This program is free software: you can redistribute it
  *   and/or modify it under the terms of the GNU General Public License as
  *   published by the Free Software Foundation, either version 3 of the License,
  *   or (at your option) any later version.
- *   
+ *
  *   entropy-triangle-weka-package is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- *   
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with entropy-triangle-weka-package.
  *   If not, see <http://www.gnu.org/licenses/>.
@@ -28,37 +28,39 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.evaluation.StandardEvaluationMetric;
 import weka.core.ContingencyTables;
 import weka.core.Instance;
-import weka.core.Utils;
 import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
 import weka.core.TechnicalInformationHandler;
+import weka.core.Utils;
 
 /**
- * Evaluation metric for classifiers. 
+ * Evaluation metric for classifiers.
  * The Normalized Information Transfer factor is a measure of how efficient is
- * the transmission of information from the input to the output set of classes.
- * The NIT factor measures the effectiveness of the learning process.
+ * the transmission of information from the input to the output of the classifier.
+ * The NIT factor measures the effectiveness of the learning process
+ *
+ * \[ NIT_{factor} = \frac{\mu_{XY}}{k} \]
+ *
+ * Where \( \mu_{XY} = 2^{MI_{XY}} \) is the {@link InformationTransferFactor}.
  * 
- * \[ NIT = \frac{\mu_{XY}}{k} \]
- * 
- * Where \( \mu_{XY} = 2^{MI_{P_{XY}}} \) is the {@link InformationTransferFactor}
- * For more information, see<br/>
- * <br/>
+ * <br><br>
+ * For more information, see
+ * <br><br>
  * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
  * 100% classification accuracy considered harmful:
  * The normalized information transfer factor explains the accuracy paradox.
  * PLoS ONE 9(1).</a>
- * 
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ *
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
- * 
+ *
  * @author Antonio Pastor
  * @see InformationTransferFactor
  * @see weka.classifiers.Evaluation
@@ -70,7 +72,7 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/** Constant string with the metric name */
 	public static String METRIC_NAME = "NIT factor";
-	
+
 	/** Returns true. */
 	@Override
 	public boolean appliesToNominalClass() {
@@ -85,31 +87,34 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Get a short description of this metric.
-	 * 
+	 *
 	 * @return a short description of this metric
 	 */
+	@Override
 	public String getMetricDescription() {
 		return "Normalized Information Transfer factor.";
 	}
 
 	/**
 	 * Get the name of this metric.
-	 * 
+	 *
 	 * @return the name of this metric
 	 */
+	@Override
 	public String getMetricName() {
 		return Nit.METRIC_NAME;
 	}
 
 	/**
 	 * Get the value of the named statistic, should be "NIT factor".
-	 * 
+	 *
 	 * @param statName
 	 *            the name of the statistic, should be "NIT factor"
 	 * @return the computed statistic
-	 * @throws AbstractEvaluationMetric.UnknownStatisticException 
+	 * @throws AbstractEvaluationMetric.UnknownStatisticException
 	 * 			if the statistic name is not "NIT factor"
 	 */
+	@Override
 	public double getStatistic(String statName) {
 		if (!statName.contains(Nit.METRIC_NAME)) {
 			throw new UnknownStatisticException(statName + "statistic not known in class" + this.getClass().toString());
@@ -124,9 +129,10 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Get a list with the name of the metric.
-	 * 
+	 *
 	 * @return the names of the metric
 	 */
+	@Override
 	public List<String> getStatisticNames() {
 		List<String> stNames = new ArrayList<String>();
 		stNames.add(Nit.METRIC_NAME);
@@ -135,9 +141,10 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Returns a formatted string (suitable for displaying in console or GUI output) containing this metric.
-	 * 
+	 *
 	 * @return a formatted string containing the metric
 	 */
+	@Override
 	public String toSummaryString() {
 		StringBuffer text = new StringBuffer();
 		text.append("Normalized Information Transfer factor");
@@ -150,12 +157,13 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 	public boolean statisticIsMaximisable(java.lang.String statName) {
 		return true;
 	}
-	
+
 	/**
 	 * Not used.
 	 * This method is required to conform to the {@link StandardEvaluationMetric}
 	 * interface, but not implemented.
 	 */
+	@Override
 	public void updateStatsForClassifier(double[] predictedDistribution, Instance instance) throws Exception {
 		return;
 	}
@@ -165,6 +173,7 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 	 * This method is required to conform to the {@link StandardEvaluationMetric}
 	 * interface, but not implemented.
 	 */
+	@Override
 	public void updateStatsForPredictor(double predictedValue, Instance instance) throws Exception {
 		return;
 	}
@@ -173,7 +182,7 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 	 * Returns an instance of a TechnicalInformation object, containing detailed
 	 * information about the technical background of this class, e.g., paper
 	 * reference or book this class is based on.
-	 * 
+	 *
 	 * @return the technical information about this class
 	 */
 	@Override
@@ -212,5 +221,5 @@ public class Nit extends AbstractEvaluationMetric implements StandardEvaluationM
 				+ " reject rankings based in accuracy, choosing more meaningful and interpretable classifiers.");
 		return result;
 	}
-	
+
 }

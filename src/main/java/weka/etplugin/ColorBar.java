@@ -1,8 +1,6 @@
 /*
  *   This file is part of entropy-triangle-weka-package.
  *   
- *   Copyright (C) 2015  Antonio Pastor
- *   
  *   This program is free software: you can redistribute it
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
@@ -59,12 +57,14 @@ import weka.core.Instances;
 import weka.core.Utils;
 
 /**
- * This panel displays colored labels for nominal or string attributes and a spectrum for numeric attributes.
- * </br></br>
- * This class is a modified version of the Weka {@link weka.gui.visualize.ClassPanel} to fit the needs of the Entropy Triangle package.
- * Incorporates a method to get the color of the spectrum or labels.
- * The objects on the repainters list, or that handles an <code>ActionListener</code> on the <code>ActionListener</code> list
- * can call the {@link #getColor(double)}
+ * This panel displays colored labels for nominal or string attributes and a rainbow style gradient for numeric attributes.
+ * <br><br>
+ * This class is a modified version of the Weka's {@link weka.gui.visualize.ClassPanel} to fit the needs of the Entropy Triangle package.
+ * It incorporates the {@link #getColor(double)} method to get the color of the gradient or labels for a given value.
+ * 
+ * As the original <code>ClassPanel</code> of Weka,
+ * the ColorBar notifies to the objects on the repainters list and
+ * to the registered ActionListeners when the class attribute is changed or the range of values is modified.
  * 
  * @author Mark Hall (mhall@cs.waikato.ac.nz)
  * @author Malcolm Ware (mfw4@cs.waikato.ac.nz)
@@ -715,20 +715,15 @@ public class ColorBar extends JPanel {
 			int point = Math.round(standardizeValue(value)*(bar_width-1));
 			try {
 				if (colorBuffer==null) {
-					System.out.println("colorBar raster not initialized");
 					return color;
 				}
 				color = new Color(colorBuffer.getElem(point));
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.printf("width: %d\npoint: %d\nmax: %.4f\nmin: %.4f\nvalue: %.4f\nstandardized: %.4f\n",
-						bar_width, point, m_maxC, m_minC, value, standardizeValue(value));
-				System.out.println("ColorBar error: Trying to accessing out of range");
-				//			e.printStackTrace();
+				color = color.GRAY;
 			}
 		} else {
 			color = this.m_colorList.get((int) Math.round(value));
 		}
-		//		System.out.println(color);
 		return color;
 	}
 
@@ -752,6 +747,10 @@ public class ColorBar extends JPanel {
 	 * @see getColor(double value)
 	 */
 	private LinearGradientPaint setGradient(Graphics2D g){
+		if (this.getWidth()<= 2*m_HorizontalPad) {
+			colorBuffer = null;
+			return null;
+		}
 		LinearGradientPaint gradient = new LinearGradientPaint (new Point2D.Double(m_HorizontalPad,0),new Point2D.Double(this.getWidth()-m_HorizontalPad,0),dist,colors,
 				MultipleGradientPaint.CycleMethod.NO_CYCLE,MultipleGradientPaint.ColorSpaceType.LINEAR_RGB,new AffineTransform());
 
@@ -795,7 +794,7 @@ public class ColorBar extends JPanel {
 				System.exit(1);
 			}
 			final javax.swing.JFrame jf = new javax.swing.JFrame(
-					"Weka Explorer: Class");
+					"Color bar test");
 			jf.setSize(500, 100);
 			jf.getContentPane().setLayout(new BorderLayout());
 			final ColorBar p2 = new ColorBar();

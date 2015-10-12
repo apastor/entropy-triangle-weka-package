@@ -49,20 +49,21 @@ import weka.gui.ResultHistoryPanel;
 /**
  * This class acts as a launcher for the Entropy Triangle Plugin from the visualization plugin context menu of the Weka explorer 
  * and from the Extensions menu in the Weka GUI Chooser window.
- * </br></br>
- * The same window, and Entropy Triangle panel, is shared for both invoking sources. This way can be added instances from the explorer 
+ * <br><br>
+ * The same window, and {@code EntropyTrianglePanel}, is shared for both invoking sources. This way can be added instances from the explorer 
  * to a plot of a instances loaded from a file.
- * </br></br>
+ * <br><br>
  * The panel data is cleared when the user closes the window.
- * </br></br>
- * For more information about the Entropy Triangle, see<br/>
- * <br/>
+ * <br><br>
+ * For more information about the Entropy Triangle, see<br>
+ * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  * 
  * @author Antonio Pastor
+ * @see EntropyTrianglePanel
  *
  */
 public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExtension, TechnicalInformationHandler {
@@ -128,6 +129,7 @@ public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExte
 					return;
 				}
 				SwingUtilities.invokeLater(new Runnable() {
+					@Override
 					public void run() {
 						updateWindow();
 						try {

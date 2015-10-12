@@ -183,6 +183,7 @@
       <fileset dir="./">
         <include name="*.props"/>
         <include name="*.txt"/>
+        <include name="*.md"/>
       </fileset>
     </copy>
     <delete>
@@ -190,13 +191,15 @@
         <include name="*.jar"/>
       </fileset>
     </delete>
-  	<mkdir dir="${dist}/${package}/lib"/>
+<!--NO LIBS USED
+    <mkdir dir="${dist}/${package}/lib"/>
     <copy todir="${dist}/${package}/lib" >
        <fileset dir="${lib}">
          <include name="*.jar"/>
          <include name="*.zip"/>
        </fileset>
     </copy>
+-->
     <mkdir dir="${dist}/${package}/doc"/>
     <copy todir="${dist}/${package}/doc" >
        <fileset dir="${doc}">

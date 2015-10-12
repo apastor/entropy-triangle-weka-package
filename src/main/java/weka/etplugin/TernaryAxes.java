@@ -24,17 +24,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.font.TextLayout;
+import java.awt.RenderingHints;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.border.EmptyBorder;
 
 final class TernaryAxes extends PlotElement {
 
+	/** Font for the ticks labels */
 	public static Font FONT_TICK = new Font("Arial", Font.PLAIN, 6);
+	
+	/** Font for the axes labels */
 	public static Font FONT_AXES = new Font("Arial", Font.PLAIN, 10);
 	
 	public static double FONT_SCALE_FACTOR = 1.0/200; // It must be between 0 and 1
@@ -50,12 +54,20 @@ final class TernaryAxes extends PlotElement {
 	private double tick_dist = 0.1;
 	private double tickLabels_dist = 0.1;
 	
+	private Font font_axes, font_axes60cw, font_axes60a;
+	private Font font_tick, font_tick60cw, font_tick60a;
+	
 	public TernaryAxes (){
 		this.setBorder(new EmptyBorder(0, 0, 0, 0));
 		axes.moveTo(0, 0);
 		axes.lineTo(1, 0);
 		axes.lineTo(TernaryPlot.COS60, TernaryPlot.SIN60);
 		axes.closePath();
+		
+		AffineTransform aff = AffineTransform.getScaleInstance(FONT_SCALE_FACTOR, -FONT_SCALE_FACTOR); // FONT_SCALE_FACTOR (0,1)
+		
+		font_axes = FONT_AXES.deriveFont(aff);
+		font_tick = FONT_TICK.deriveFont(aff);
 	}
 	
 	public TernaryAxes (double tick_dist, double tickLabels_dist){
@@ -96,14 +108,13 @@ final class TernaryAxes extends PlotElement {
 
 	protected void paintComponent(Graphics g){
 		Graphics2D g2D =(Graphics2D) g;
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 		
-		AffineTransform aff_font = AffineTransform.getScaleInstance(FONT_SCALE_FACTOR, -FONT_SCALE_FACTOR); // FONT_SCALE_FACTOR (0,1)
-		AffineTransform aff_rot60CW = (AffineTransform) aff_font.clone();
-		AffineTransform aff_rot60ACW = (AffineTransform) aff_font.clone();
-
-		aff_rot60CW.rotate(Math.toRadians(60));// rotation clockwise
-		aff_rot60ACW.rotate(Math.toRadians(-60)); // rotation anticlockwise
-
+		
+		FontRenderContext frc = g2D.getFontRenderContext();
+		GlyphVector gv;
 		Rectangle2D sw;
 		double sw_x, sw_y;
 		
@@ -120,58 +131,45 @@ final class TernaryAxes extends PlotElement {
 				g2D.draw(new Line2D.Double((1-i-TICK_SIZE)*TernaryPlot.COS60, (1-i+TICK_SIZE)*TernaryPlot.SIN60, (1-i)*TernaryPlot.COS60, (1-i)*TernaryPlot.SIN60)); // VI axis tick lines
 			}
 		}
-
 		if(tickLabels_dist!=0){
-			g2D.setFont(FONT_TICK.deriveFont(aff_font));
-			sw = new TextLayout (String.format("%.1f",0.1), g2D.getFont(), g2D.getFontMetrics().getFontRenderContext()).getBounds();
+			gv = font_tick.createGlyphVector(frc, "0.9");
+			sw = gv.getVisualBounds();
 			sw_x = sw.getWidth();
 			sw_y = sw.getHeight();
 			//			System.out.println(sw_x);
 
 			// draw tick labels	
 			for (double i=tickLabels_dist ; i<0.99; i+=tickLabels_dist) {
-				g2D.setFont(FONT_TICK.deriveFont(aff_rot60ACW)); // Rotated font for deltaH tick labels
-				g2D.drawString(String.format("%.1f",i), (float) (i-(2*TICK_SIZE+sw_x)*TernaryPlot.COS60+sw_y*TernaryPlot.SIN60/2), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.SIN60));
-				//
-				g2D.setFont(FONT_TICK.deriveFont(aff_rot60CW)); // Rotated font for VI tick labels
-				g2D.drawString(String.format("%.1f",i), (float) ((1-i-2*TICK_SIZE-sw_x)*TernaryPlot.COS60-sw_y*TernaryPlot.SIN60/2), (float) ((1-i+2*TICK_SIZE+sw_x)*TernaryPlot.SIN60));
-				//
-				g2D.setFont(FONT_TICK.deriveFont(aff_font)); // Set scaled straight font for MI tick labels
-				g2D.drawString(String.format("%.1f",i), (float) (1-i*TernaryPlot.COS60+2*TICK_SIZE), (float) (i*TernaryPlot.SIN60-sw_y/2));
+				// Rotated text for deltaH tick labels
+				TernaryAxes.drawRotatedText(g2D ,font_tick.createGlyphVector(frc, String.format("%.1f",i)), (float) (i-(2*TICK_SIZE+sw_x)*TernaryPlot.COS60+sw_y*TernaryPlot.SIN60/2), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.SIN60), 60);
+				// Rotated graphics for VI tick labels
+				TernaryAxes.drawRotatedText(g2D ,font_tick.createGlyphVector(frc, String.format("%.1f",i)), (float) ((1-i-2*TICK_SIZE-sw_x)*TernaryPlot.COS60-sw_y*TernaryPlot.SIN60/2), (float) ((1-i+2*TICK_SIZE+sw_x)*TernaryPlot.SIN60), -60);
+				// Straight graphics for MI tick labels
+				g2D.drawGlyphVector(font_tick.createGlyphVector(frc, String.format("%.1f",i)), (float) (1-i*TernaryPlot.COS60+2*TICK_SIZE), (float) (i*TernaryPlot.SIN60-sw_y/2));
 			}
-
 			// draw 1 tick labels
-			g2D.setFont(FONT_TICK.deriveFont(aff_rot60ACW)); // Rotated font for deltaH tick labels
-			g2D.drawString(String.format("%d",1), (float) (1-(2*TICK_SIZE+sw_x)*TernaryPlot.COS60+sw_y*TernaryPlot.SIN60/2), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.SIN60));
-			//
-			g2D.setFont(FONT_TICK.deriveFont(aff_rot60CW)); // Rotated font for VI tick labels
-			g2D.drawString(String.format("%d",1), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.COS60-sw_y*TernaryPlot.SIN60/2), (float) ((2*TICK_SIZE+sw_x)*TernaryPlot.SIN60));
-			//
-			g2D.setFont(FONT_TICK.deriveFont(aff_font)); // Set scaled straight font for MI tick labels
-			g2D.drawString(String.format("%d",1), (float) (TernaryPlot.COS60+2*TICK_SIZE), (float) (TernaryPlot.SIN60-sw_y/2));
+			
+			// Rotated graphics for deltaH tick labels
+			TernaryAxes.drawRotatedText(g2D ,font_tick.createGlyphVector(frc, String.format("%d",1)), (float) (1-(2*TICK_SIZE+sw_x)*TernaryPlot.COS60+sw_y*TernaryPlot.SIN60/2), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.SIN60), 60);
+			// Rotated graphics for VI tick labels
+			TernaryAxes.drawRotatedText(g2D ,font_tick.createGlyphVector(frc, String.format("%d",1)), (float) ((-2*TICK_SIZE-sw_x)*TernaryPlot.COS60-sw_y*TernaryPlot.SIN60/2), (float) ((2*TICK_SIZE+sw_x)*TernaryPlot.SIN60), -60);
+			// Straight font for MI tick labels
+			g2D.drawGlyphVector(font_tick.createGlyphVector(frc, String.format("%d",1)), (float) (TernaryPlot.COS60+2*TICK_SIZE), (float) (TernaryPlot.SIN60-sw_y/2));
 		}
-		
-
-		g2D.setFont(FONT_AXES.deriveFont(aff_font));
-		sw = new TextLayout (deltaH, g2D.getFont(), g2D.getFontMetrics().getFontRenderContext()).getBounds();
+		gv = font_axes.createGlyphVector(frc, deltaH);
+		sw = gv.getVisualBounds();
 		sw_x = sw.getWidth();
 		sw_y = sw.getHeight();
-		//			System.out.println(sw);
-		g2D.drawString(deltaH, (float) (0.5*(1-sw_x)), (float) (-sw_y-7*TICK_SIZE));
+		g2D.drawGlyphVector(gv, (float) (0.5*(1-sw_x)), (float) (-sw_y-7*TICK_SIZE));
 
-		g2D.setFont(FONT_AXES.deriveFont(aff_rot60ACW));
-		sw = new TextLayout (vI, g2D.getFont(), g2D.getFontMetrics().getFontRenderContext()).getBounds();
+		gv = font_axes.createGlyphVector(frc, vI);
+		TernaryAxes.drawRotatedText(g2D, gv, 0.25-5*TICK_SIZE/TernaryPlot.COS60, (0.5+5*TICK_SIZE)*TernaryPlot.SIN60, 60);
+
+		gv = font_axes.createGlyphVector(frc, mI);
+		sw = gv.getVisualBounds();
 		sw_x = sw.getWidth();
 		sw_y = sw.getHeight();
-		//			System.out.println(sw);
-		g2D.drawString(vI, (float) (0.25-5*TICK_SIZE/TernaryPlot.COS60), (float) ((0.5+5*TICK_SIZE)*TernaryPlot.SIN60));
-
-		g2D.setFont(FONT_AXES.deriveFont(aff_rot60CW));
-		sw = new TextLayout (vI, g2D.getFont(), g2D.getFontMetrics().getFontRenderContext()).getBounds();
-		sw_x = sw.getWidth();
-		sw_y = sw.getHeight();
-		//			System.out.println(sw);
-		g2D.drawString(mI, (float) (0.75+5*TICK_SIZE/TernaryPlot.COS60-sw_y/2), (float) ((0.5+sw_y+5*TICK_SIZE)*TernaryPlot.SIN60));
+		TernaryAxes.drawRotatedText(g2D, gv, 0.75+5*TICK_SIZE/TernaryPlot.COS60-sw_y*TernaryPlot.SIN60, (sw_x+0.5+5*TICK_SIZE)*TernaryPlot.SIN60, -60);
 	}
 
 	@Override
@@ -183,4 +181,12 @@ final class TernaryAxes extends PlotElement {
 	public int ElementType() {
 		return PlotElement.AXES_ELEMENT;
 	}
+	
+	private static void drawRotatedText(Graphics g, GlyphVector gv, double x, double y, int rot){
+		final Graphics2D g2 = (Graphics2D) g.create();
+		g2.rotate(Math.toRadians(rot),x, y);
+		g2.drawGlyphVector(gv, (float) x, (float) y);
+		g2.dispose();
+	}
+	
 }

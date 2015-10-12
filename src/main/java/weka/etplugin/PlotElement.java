@@ -25,13 +25,13 @@ import javax.swing.JComponent;
 /**
  * Interface that allows ordering sorting the drawing preference of different types of elements of a plot.
  * It has two layers of preference, if the object of an implementing class is a {@link #TOP_ELEMENT}.
- * </br>
- * </br>
- * The order of elements from top to bottom is: </br></br>
+ * <br>
+ * <br>
+ * The order of elements from top to bottom is: <br><br>
  * <pre>
  * 		<code>POINT_ELEMENT > LINE_ELEMENT > AXES_ELEMENT >  GRID_ELEMENT</code>
  * </pre> 
- * All element types can be Top. The same sort is reproduced within top elements.</br></br>
+ * All element types can be Top. The same sort is reproduced within top elements.<br><br>
  * Top elements of type top element are drawn above all, useful for non graph parts, i.e. a legend.
  * 
  * @author Antonio Pastor

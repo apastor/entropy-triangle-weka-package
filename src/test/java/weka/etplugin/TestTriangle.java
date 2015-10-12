@@ -24,7 +24,6 @@
 package weka.etplugin;
 
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
@@ -32,61 +31,50 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class TestTriangle {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		
-		final JFrame frame = new JFrame();
-		final EntropyTrianglePanel et = new EntropyTrianglePanel();
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-//				System.out.println("Created GUI on EDT? "+
-//						SwingUtilities.isEventDispatchThread());
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.add(et);
-				frame.setVisible(true);
-				frame.pack();
-			}
-		});
+
+		JFrame frame = new JFrame();
+		EntropyTrianglePanel et = new EntropyTrianglePanel();
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(et);
+		frame.setVisible(true);
+		frame.pack();
+
 		try {
-			DataSource source = new DataSource("./datasets/segment-challenge.arff");
+			DataSource source = new DataSource("~/wekafiles/datasets/segment-challenge.arff");
 			Instances train = source.getDataSet();
-			Instances test = DataSource.read("./datasets/segment-test.arff");
+			Instances test = DataSource.read("~/wekafiles/datasets/segment-test.arff");
 			train.setClassIndex(train.numAttributes() - 1);
 			test.setClassIndex(test.numAttributes() - 1);
-			weka.classifiers.trees.J48 j48 = new weka.classifiers.trees.J48();
-			j48.buildClassifier(train);
+
 			Evaluation eval = new Evaluation(train);
-//			System.out.println(test.toString());
-			eval.evaluateModel(j48, test);
-//			System.out.println(eval.toSummaryString(true));
-			et.addData(eval, j48, test.relationName(), null);;
-			
-//			System.out.println(eval.numInstances());
+			weka.classifiers.rules.ZeroR zr = new weka.classifiers.rules.ZeroR();
+			zr.buildClassifier(train);
+			eval.evaluateModel(zr, test);
+			et.addData(eval, zr, test.relationName(), null);
+
+			eval = new Evaluation(train);
+			weka.classifiers.rules.OneR oner = new weka.classifiers.rules.OneR();
+			oner.buildClassifier(train);
+			eval.evaluateModel(oner, test);
+			et.addData(eval, oner, test.relationName(), null);
+
 			eval = new Evaluation(train);
 			weka.classifiers.bayes.NaiveBayes nb = new weka.classifiers.bayes.NaiveBayes();
 			nb.buildClassifier(train);
 			eval.evaluateModel(nb, test);
 			et.addData(eval, nb, test.relationName(), null);
-//			System.out.println(eval.numInstances());
+
+			weka.classifiers.trees.J48 j48 = new weka.classifiers.trees.J48();
+			j48.buildClassifier(train);
 			eval = new Evaluation(train);
-			weka.classifiers.rules.ZeroR zr = new weka.classifiers.rules.ZeroR();
-			zr.buildClassifier(train);
-			eval.evaluateModel(zr, test);
-			et.addData(eval, zr, test.relationName(), null);
-			
-			eval = new Evaluation(train);
-			weka.classifiers.rules.OneR or = new weka.classifiers.rules.OneR();
-			or.buildClassifier(train);
-			eval.evaluateModel(or, test);
-			et.addData(eval, or, test.relationName(), null);
-			
+			eval.evaluateModel(j48, test);
+			et.addData(eval, j48, test.relationName(), null);
+
 		} catch (Exception e) {
 			System.out.println("Error on main");
 			e.printStackTrace();
 		}
-//		
 	}
 }

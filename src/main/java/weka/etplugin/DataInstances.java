@@ -30,7 +30,7 @@ import weka.core.Utils;
 
 /**
  * Class for handling a set of instances (of the type {@link DataInstance}) with information of evaluation of classification processes.
- * This class handles the updates of the contained instances "tooltips" when the class attribute is changed.
+ * This class handles the update of the tooltips of the contained instances when the class attribute is changed.
  * 
  * @author Antonio Pastor
  * @see EntropyTrianglePanel

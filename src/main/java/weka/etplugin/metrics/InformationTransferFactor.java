@@ -30,30 +30,36 @@ import weka.classifiers.evaluation.InformationTheoreticEvaluationMetric;
 import weka.core.ContingencyTables;
 import weka.core.Instance;
 import weka.core.TechnicalInformation;
-import weka.core.TechnicalInformationHandler;
-import weka.core.Utils;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
+import weka.core.TechnicalInformationHandler;
+import weka.core.Utils;
 
 /**
  * Information theoretic evaluation metric for classifiers.
- * The Information Transfer factor is \( \mu_{XY} = 2^{MI_{P_{XY}}} \), where MI is the Mutual Information between the input and the output of the classifier.
- * For more information, see<br/>
- * <br/>
- * Fano MR (1961). Transmission of Information: A Statistical Theory of Communication. The MIT Press.
- * <br/>
- * <br/>
+ * The Information Transfer factor measures the decrement in difficulty of the task as the perplexity of the
+mutual information between the input and the output distributions of the classifier.
+ * \[ \mu_{XY} = 2^{MI_{XY}} \]
+ * 
+ * where \[ MI_{XY} = H_X - H_{X|Y} =- \sum_{i,j}{p(x_i,y_j) log_2\frac{p(x_i,y_j)}{p(x_i)p(y_j)}} \]
+ * 
+ * <br>
+ * For more information, see
+ * <br><br>
  * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
  * 100% classification accuracy considered harmful:
  * The normalized information transfer factor explains the accuracy paradox.
  * PLoS ONE 9(1).</a>
+ * <br/>
+ * Fano MR (1961). Transmission of Information: A Statistical Theory of Communication. The MIT Press.
+ * <br/>
  * 
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
  * 

@@ -44,7 +44,7 @@ import weka.etplugin.metrics.VariationOfInformation;
  * Wrapper class that stores the evaluation data of each classification performed
  * alongside the graphical components to represent that evaluation in the Entropy Triangle.
  * 
- * It handles the <code>ToolTip</code> windows and the color of the <code>DataPoints</code> if the <code>ActionListener</code> is added,
+ * It handles the tooltip windows and the color of the <code>DataPoints</code> if the <code>ActionListener</code> is added,
  * i.e., to the <code>ColorBar</code>.
  * 
  * @author Antonio Pastor
@@ -163,8 +163,8 @@ public class DataInstance extends DenseInstance implements TechnicalInformationH
 	}
 
 	/**
-	 * Sets and updates the <code>ToolTip</code> windows of the <code>DataPoints</code> of this object.
-	 * This method should be called when any of the information showed in the <code>ToolTips</code> may have changed.
+	 * Sets and updates the tooltip windows of the <code>DataPoints</code> of this object.
+	 * This method should be called when any of the information showed in the tooltip may have changed.
 	 */
 	public void setToolTips() {
 		

@@ -30,28 +30,28 @@ import weka.classifiers.evaluation.InformationTheoreticEvaluationMetric;
 import weka.core.ContingencyTables;
 import weka.core.Instance;
 import weka.core.TechnicalInformation;
-import weka.core.TechnicalInformationHandler;
-import weka.core.Utils;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
+import weka.core.TechnicalInformationHandler;
+import weka.core.Utils;
 
 /**
  * The Variation of Information is the sum the mutually conditioned entropies between the input and the output of the classifier.
  * 
- * \[ VI = H_{P_{X|Y}} + H_{P_{Y|X}} \]
- * 
+ * \[ VI = H_{X|Y} + H_{Y|X} \]
+ * <br>
  * For more information, see<br/>
- * <br/>
+ * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  *  
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
  * 

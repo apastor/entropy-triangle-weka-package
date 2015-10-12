@@ -7,10 +7,10 @@ PackageName=EntropyTriangle
 Version=1.0
 
 #Date (year-month-day)
-Date=2015-07-23
+Date=2015-10-01
 
 # Title (required)
-Title=A set of information-theoretic tools for the assesment of classifiers. The package installs evaluation metrics and a visualization plugin. 
+Title=A set of information-theoretic tools for the assessment of classifiers
 
 # Category (recommended)
 Category=Classifiers Evaluation, Visualization
@@ -26,7 +26,7 @@ License=GPL 3.0
 
 # Description (required)
 Description=This package installs a set of information-theoretic evaluation metrics \
-and a visualization plugin for the assesment of classifiers. \n\
+and a visualization plugin with an exploratory analysis method for the assessment of classifiers. \n\
 \n\
 For more information, see: \n\
 \n\
@@ -45,13 +45,14 @@ For more information, see: \n\
 </li></ul>
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://github.com/apastor/entropy-triangle-weka-package/EntropyTriangle.zip?download
+# direct download with redirect to latest release or static link
+PackageURL=http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
 
 # URL for further information
-URL=http://github.com/apastor/entropy-triangle-weka-package
+URL=http://apastor.github.io/entropy-triangle-weka-package/
 
 # Dependencies (format: packageName (equality/inequality version_number)
-Depends=weka (>=3.7.12)
+Depends=weka (>=3.7.8)
 
 # Message to display in installation. Can be used to provide
 # special instructions (e.g. manual stuff needed to complete
@@ -78,7 +79,7 @@ Depends=weka (>=3.7.12)
 # Java3D, which installs itself into the system JRE/JDK. (optional)
 #DoNotLoadIfClassNotPresent=com.some.class.from.some.Where,org.some.other.Class,...
 
-# Log message to be displayed if package can't be loaded due to 
+# Log message to be displayed if package can't be loaded due to
 # missing classes. (optional).
 #DoNotLoadIfClassNotPresentMessage=funkyPackage can't be loaded because \
 # com.funky.FunkyClass can't be instantiated. Have you downloaded and run \

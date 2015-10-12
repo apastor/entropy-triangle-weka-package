@@ -1,18 +1,18 @@
 /*
  *   This file is part of entropy-triangle-weka-package.
- *   
+ *
  *   Copyright (C) 2015  Antonio Pastor
- *   
+ *
  *   This program is free software: you can redistribute it
  *   and/or modify it under the terms of the GNU General Public License as
  *   published by the Free Software Foundation, either version 3 of the License,
  *   or (at your option) any later version.
- *   
+ *
  *   entropy-triangle-weka-package is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- *   
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with entropy-triangle-weka-package.
  *   If not, see <http://www.gnu.org/licenses/>.
@@ -37,27 +37,30 @@ import weka.core.Utils;
 /**
  * Evaluation metric for classifiers.
  * The Entropy Modulated Accuracy is a pessimistic estimate of the accuracy
- * with the influence of the input distribution factored out. It is a quality measure
- * based in the remaining perplexity at the output of the classifier.
+ * with the influence of the input distribution factored out.
+ * It is defined mathematically as the inverse of the {@link RemainingPerplexity} after the learning process
+ *
+ * \[ EMA = \frac{1}{PP_{X|Y}} = \frac{1}{2^{H_{X|Y}}} \]
  * 
- * \[ EMA = \frac{1}{k_{X|Y}} = \frac{1}{2^{H_{P_{X|Y}}}} \]
+ * Its bounds are \( \frac{1}{PP_X} \leq EMA \leq 1 \), where \( PP_X \) is the {@link ClassPerplexity}.
  * 
- * For more information, see<br/>
- * <br/>
+ * <br><br>
+ * For more information, see
+ * <br><br>
  * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
  * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
  * 100% classification accuracy considered harmful:
  * The normalized information transfer factor explains the accuracy paradox.
  * PLoS ONE 9(1).</a>
- * 
- * </br></br>
- * NOTE: This class needs to have an associated Evaluation object to calculate the metric.
+ *
+ * <br><br>
+ * NOTE: This class needs to have an associated Evaluation object to compute the metric.
  * The Evaluation object can be set via {@link #setBaseEvaluation(Evaluation eval)}.
- * </br>
- * Also, if the package is properly installed in Weka, a reference to the object of this class associated with every
+ * <br>
+ * If the package is properly installed in Weka, a reference to the object of this class associated with every
  * Evaluation object can be obtained via the method {@link Evaluation#getPluginMetric(String metricName)}, or the method
  * {@link Evaluation#getPluginMetrics()} to get a list of all the plugin metrics associated with that Evaluation object.
- * 
+ *
  * @author Antonio Pastor
  * @see RemainingPerplexity
  * @see weka.classifiers.Evaluation
@@ -69,7 +72,7 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/** Constant string with the metric name */
 	public static String METRIC_NAME = "EMA";
-	
+
 	/** Returns true. */
 	@Override
 	public boolean appliesToNominalClass() {
@@ -84,31 +87,34 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Get a short description of this metric.
-	 * 
+	 *
 	 * @return a short description of this metric
 	 */
+	@Override
 	public String getMetricDescription() {
 		return "Entropy Modulated Accuracy";
 	}
 
 	/**
 	 * Get the name of this metric.
-	 * 
+	 *
 	 * @return the name of this metric
 	 */
+	@Override
 	public String getMetricName() {
 		return Ema.METRIC_NAME;
 	}
 
 	/**
 	 * Get the value of the named statistic, should be "EMA".
-	 * 
+	 *
 	 * @param statName
 	 *            the name of the statistic, should be "EMA"
 	 * @return the computed statistic
-	 * @throws AbstractEvaluationMetric.UnknownStatisticException 
+	 * @throws AbstractEvaluationMetric.UnknownStatisticException
 	 * 			if the statistic name is not "EMA"
 	 */
+	@Override
 	public double getStatistic(String statName) {
 		if (!statName.contains(Ema.METRIC_NAME)) {
 			throw new UnknownStatisticException(statName + "statistic not known in class" + this.getClass().toString());
@@ -119,9 +125,10 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Get a list with the name of the metric.
-	 * 
+	 *
 	 * @return the names of the metric
 	 */
+	@Override
 	public List<String> getStatisticNames() {
 		List<String> stNames = new ArrayList<String>();
 		stNames.add(Ema.METRIC_NAME);
@@ -130,7 +137,7 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 
 	/**
 	 * Returns a formatted string (suitable for displaying in console or GUI output) containing this metric.
-	 * 
+	 *
 	 * @return a formatted string containing the metric
 	 */
 	@Override
@@ -146,12 +153,13 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 	public boolean statisticIsMaximisable(java.lang.String statName) {
 		return true;
 	}
-	
+
 	/**
 	 * Not used.
 	 * This method is required to conform to the {@link StandardEvaluationMetric}
 	 * interface, but not implemented.
 	 */
+	@Override
 	public void updateStatsForClassifier(double[] predictedDistribution, Instance instance) throws Exception {
 		return;
 	}
@@ -161,6 +169,7 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 	 * This method is required to conform to the {@link StandardEvaluationMetric}
 	 * interface, but not implemented.
 	 */
+	@Override
 	public void updateStatsForPredictor(double predictedValue, Instance instance) throws Exception {
 		return;
 	}
@@ -169,7 +178,7 @@ public class Ema extends AbstractEvaluationMetric implements StandardEvaluationM
 	 * Returns an instance of a TechnicalInformation object, containing detailed
 	 * information about the technical background of this class, e.g., paper
 	 * reference or book this class is based on.
-	 * 
+	 *
 	 * @return the technical information about this class
 	 */
 	@Override
