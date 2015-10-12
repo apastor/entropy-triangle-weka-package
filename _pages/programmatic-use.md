@@ -187,11 +187,17 @@ $ javac MyExperiment.java
  # Run!!
 $ java MyExperiment
 ```
+Running the program opens the Entropy Triangle window with the evaluation results.
+Now they can be explored interactively.
+
+![]({{ site.baseurl }}/assets/img/ETplugin_myexperiment.png)
+
+
 
 ## Printing the plugin metrics
 
 The plugin metrics are integrated in the Weka `Evaluation` class.
-This, makes them available on all the interfaces, including the output of our code.
+This makes them available on all the interfaces, including the output of our code.
 
 To print a classification report, like in the Weka explorer, we have to call the
 method [`toSummaryString()`](http://weka.sourceforge.net/doc.dev/weka/classifiers/evaluation/Evaluation.html#toSummaryString()) of the evaluation object.

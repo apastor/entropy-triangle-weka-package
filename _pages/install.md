@@ -48,7 +48,9 @@ $ java weka.core.WekaPackageManager -install-package <path or url to>/EntropyTri
 ---
 ## BUILD
 <br>
-To build the package from source you can use [Apache Ant](http://ant.apache.org/).
+The installable zip package is cross-platform, building the package is not necessary.
+Anyway, to build the package from source you can use [Apache Ant](http://ant.apache.org/).
+
 Run the following command from the project root directory:
 
 ```bash
