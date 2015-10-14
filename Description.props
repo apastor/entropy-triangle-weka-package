@@ -46,7 +46,7 @@ For more information, see: \n\
 
 # Package URL for obtaining the package archive (required)
 # direct download with redirect to latest release or static link
-PackageURL=http://github.com/apastor/entropy-triangle-weka-package/releases/download/0.9/EntropyTriangle.zip
+PackageURL=http://github.com/apastor/entropy-triangle-weka-package/releases/download/1.0/EntropyTriangle.zip
 
 # URL for further information
 URL=http://apastor.github.io/entropy-triangle-weka-package/
