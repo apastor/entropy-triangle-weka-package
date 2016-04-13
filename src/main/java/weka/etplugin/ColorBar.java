@@ -76,6 +76,8 @@ public class ColorBar extends JPanel {
 	/** for serialization */
 	private static final long serialVersionUID = -7969401840501661430L;
 
+	private weka.core.Version weka_version = new weka.core.Version();
+
 	private DataBuffer colorBuffer = null;
 
 	private float[] dist = {0f, 0.35f, 0.7f, 1f};
@@ -216,6 +218,7 @@ public class ColorBar extends JPanel {
 			}
 			m_colorList.add(pc);
 		}
+		this.setVisible(true);
 	}
 
 	/**
@@ -411,7 +414,6 @@ public class ColorBar extends JPanel {
 				m_HorizontalPad = m_labelMetrics.stringWidth(maxStringC);
 			}
 		}
-		this.repaint();
 	}
 
 	/**
@@ -421,10 +423,10 @@ public class ColorBar extends JPanel {
 	 */
 	protected void paintNominal(Graphics gx) {
 		setFonts(gx);
-
+		
 		int numClasses = m_Instances.classAttribute().numValues();
 		int strOffset = 0;
-		if (m_Instances.classAttribute().isString()){
+		if (m_Instances.classAttribute().isString() && weka_version.isOlder("3.7.13")){
 			strOffset = 1; // STRING ATTRIBUTE DUMMY STRING
 		}
 
@@ -664,6 +666,7 @@ public class ColorBar extends JPanel {
 								+ 5 + m_tickSize + hf));
 			}
 		}
+		
 		this.setSize(getWidth(), m_spectrumHeight + 5 + m_tickSize + hf + 20);
 	}
 
@@ -672,7 +675,7 @@ public class ColorBar extends JPanel {
 		super.paintComponent(gx);
 		if (m_isNumeric) {
 			m_oldWidth = -9000; // done so that if change back to nom, it will work
-			this.setEnabled(false);
+			//this.setEnabled(false);
 			this.removeAll();
 			setNumeric();
 			paintNumeric(gx);
@@ -680,8 +683,8 @@ public class ColorBar extends JPanel {
 			if (m_Instances != null && m_Instances.numInstances() > 0
 					&& m_Instances.numAttributes() > 0) {
 				int nClasses = m_Instances.classAttribute().numValues();
-				if (m_Instances.classAttribute().isString()) {
-					nClasses--;
+				if (m_Instances.classAttribute().isString() && weka_version.isOlder("3.7.13")) {
+					nClasses--; // Value 0 of String attributes is a Dummy String that the colorBar eliminates in versions older than 3.7.13
 				}
 				if (m_oldWidth != this.getWidth() || nClasses != this.getComponentCount()) {
 					this.removeAll();
@@ -719,9 +722,12 @@ public class ColorBar extends JPanel {
 				}
 				color = new Color(colorBuffer.getElem(point));
 			} catch (ArrayIndexOutOfBoundsException e) {
-				color = color.GRAY;
+				color = Color.GRAY;
 			}
 		} else {
+			if(weka_version.isOlder("3.7.13")){
+				value--; // Value 0 of String attributes is a Dummy String that the colorBar eliminates in versions older than 3.7.13
+			}
 			color = this.m_colorList.get((int) Math.round(value));
 		}
 		return color;

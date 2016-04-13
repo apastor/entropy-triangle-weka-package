@@ -23,7 +23,7 @@
   <property name="package"  value="${ant.project.name}" />
   <property name="src" value="src/main/java"/>
   <property name="src-test" value="src/test/java"/>
-  <property name="lib" value="lib" />
+<!--NO LIBS USED  <property name="lib" value="lib" /> -->
   <property name="build" value="build"/>
   <property name="dist"  value="dist"/>
   <property name="doc"  value="doc"/>
@@ -38,10 +38,10 @@
    <!-- general classpath definition, incl. CLASSPATH env. variable,
    // but jars in lib directory have precedence over the CLASSPATH variable -->
   <path id="project.class.path">
-    <fileset dir="${lib}">
+<!--NO LIBS USED    <fileset dir="${lib}">
       <include name="*.jar"/>
       <include name="*.zip"/>
-    </fileset>
+    </fileset> -->
     <pathelement location="${build}/classes"/>
     <pathelement location="${build}/testcases"/>
     <pathelement path="${java.class.path}" />
@@ -257,7 +257,7 @@
       <include name="src/**/*.cost"/>
       <include name="src/**/*.arff"/>
       <include name="src/**/*.matrix"/>
-      <include name="lib/**/*.jar"/>
+<!-- NO LIBS USED      <include name="lib/**/*.jar"/> -->
     </jar>
   </target>
 
