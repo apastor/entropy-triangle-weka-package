@@ -46,7 +46,7 @@ import weka.core.Utils;
  * For more information, see
  * <br><br>
  * <a href="http://dx.doi.org/10.1371/journal.pone.0084217">
- * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2014).
+ * Valverde-Albacete, F. J., &amp; Pel&aacute;ez-Moreno, C. (2014).
  * 100% classification accuracy considered harmful:
  * The normalized information transfer factor explains the accuracy paradox.
  * PLoS ONE 9(1).</a>

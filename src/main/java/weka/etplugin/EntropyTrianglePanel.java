@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -73,7 +74,7 @@ import weka.gui.visualize.PrintablePanel;
  * For more information about the Entropy Triangle, see<br>
  * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
- * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
+ * Valverde-Albacete, F. J., &amp; Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  * 
@@ -212,7 +213,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 	 * checks the compatibility of the instances with the 
 	 * <code>checkInstance(Instance)</code> method of the 
 	 * <code>Instances</code> class.
-	 * </br>
+	 * <br>
 	 * Initialize the data list if necessary.
 	 * 
 	 * @param instances the set of instances to add

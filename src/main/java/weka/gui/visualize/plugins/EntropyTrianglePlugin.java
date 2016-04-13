@@ -58,7 +58,7 @@ import weka.gui.ResultHistoryPanel;
  * For more information about the Entropy Triangle, see<br>
  * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
- * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
+ * Valverde-Albacete, F. J., &amp; Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  * 
@@ -74,13 +74,13 @@ public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExte
 	/**
 	 * Get a JMenu or JMenuItem which contain action listeners that perform the
 	 * visualization of the Entropy Triangle.
-	 * <p/>
+	 * <br>
 	 * The actual class is the attribute declared as class attribute, the
 	 * predicted class values is found in the attribute prior to the class
 	 * attribute's position. In other words, if the <code>classIndex()</code>
 	 * method returns 10, then the attribute position for the predicted class
 	 * values is 9.
-	 * <p/>
+	 * <br>
 	 * Exceptions thrown because of changes in Weka since compilation need to be
 	 * caught by the implementer.
 	 * 
@@ -192,7 +192,7 @@ public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExte
 	/**
 	 * Gets an <code>ActionListener</code> to launch or update the Entropy Triangle window.
 	 * 
-	 * @param owner Not used, needed to conform the interface </code>MainMenuExtension</code>
+	 * @param owner Not used, needed to conform the interface <code>MainMenuExtension</code>
 	 * @return the <code>ActionListener</code> 
 	 */
 	@Override

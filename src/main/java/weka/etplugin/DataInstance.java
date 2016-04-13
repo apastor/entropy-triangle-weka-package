@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
+
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -31,10 +32,10 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.TechnicalInformation;
-import weka.core.TechnicalInformationHandler;
-import weka.core.Utils;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
+import weka.core.TechnicalInformationHandler;
+import weka.core.Utils;
 import weka.etplugin.metrics.InformationTransferFactor;
 import weka.etplugin.metrics.Nit;
 import weka.etplugin.metrics.RemainingPerplexity;
@@ -273,9 +274,6 @@ public class DataInstance extends DenseInstance implements TechnicalInformationH
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				double value = classValue();
-				if (classAttribute().isString()) {
-					value--; // String Attributes value 0 is a dummy String eliminated in the ColorBar
-				}
 				Color color = colorBar.getColor(value);
 				joint.setForeground(color);
 				input.setForeground(color);

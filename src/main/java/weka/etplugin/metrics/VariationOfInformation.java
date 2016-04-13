@@ -40,10 +40,10 @@ import weka.core.Utils;
  * 
  * \[ VI = H_{X|Y} + H_{Y|X} \]
  * <br>
- * For more information, see<br/>
+ * For more information, see<br>
  * <br>
  * <a href="http://dx.doi.org/10.1016/j.patrec.2010.05.017">
- * Valverde-Albacete, F. J., & Pel&aacute;ez-Moreno, C. (2010).
+ * Valverde-Albacete, F. J., &amp; Pel&aacute;ez-Moreno, C. (2010).
  * Two information-theoretic tools to assess the performance of multi-class classifiers.
  * Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</a>
  *  

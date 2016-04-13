@@ -168,8 +168,9 @@ public class TernaryPlot extends JPanel {
 
 	
 	/**
-	 * Gets the current AffineTransform of this Panel.
+	 * Gets the current AffineTransform of the Panel.
 	 * @see AffineTransform
+	 * @return The current AffineTransform of the Panel
 	 */
 	public AffineTransform getPlotTransform() {
 		return aff_plot;
@@ -206,7 +207,7 @@ public class TernaryPlot extends JPanel {
 	}
 	
 	/** Main method for testing this class */
-	public static void main(String [] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
