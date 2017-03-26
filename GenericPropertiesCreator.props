@@ -1,2 +1,2 @@
-weka.gui.MainMenuExtension = weka.gui.visualize.plugins
-
+weka.gui.visualize.plugins.ErrorVisualizePlugin = weka.etplugin
+weka.gui.MainMenuExtension = weka.etplugin

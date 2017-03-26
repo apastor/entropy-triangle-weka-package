@@ -42,9 +42,9 @@ public class TestTriangle {
 		frame.pack();
 
 		try {
-			DataSource source = new DataSource("~/wekafiles/datasets/segment-challenge.arff");
+			DataSource source = new DataSource("/home/apastor/wekafiles/data/segment-challenge.arff");
 			Instances train = source.getDataSet();
-			Instances test = DataSource.read("~/wekafiles/datasets/segment-test.arff");
+			Instances test = DataSource.read("/home/apastor/wekafiles/data/segment-test.arff");
 			train.setClassIndex(train.numAttributes() - 1);
 			test.setClassIndex(test.numAttributes() - 1);
 

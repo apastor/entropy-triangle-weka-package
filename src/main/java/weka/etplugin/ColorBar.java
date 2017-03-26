@@ -1,6 +1,6 @@
 /*
  *   This file is part of entropy-triangle-weka-package.
- *   
+ *
  *   This program is free software: you can redistribute it
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
@@ -16,9 +16,9 @@
  */
 
 /*
- *    ColorBar.java (Modified version of the Weka source file ColorBar.java)
- *    Copyright of the changes:(C) 2015 Antonio Pastor
- *    
+ *    ColorBar.java (Modified version of the Weka source file ClassPanel.java)
+ *    Copyright of the changes (C) 2015-2017 Antonio Pastor
+ *
  *    ClassPanel.java
  *    Copyright (C) 2000-2012 University of Waikato, Hamilton, New Zealand
  *
@@ -76,7 +76,7 @@ public class ColorBar extends JPanel {
 	/** for serialization */
 	private static final long serialVersionUID = -7969401840501661430L;
 
-	private weka.core.Version weka_version = new weka.core.Version();
+	private boolean wekaVersion_3_7_12_or_older = new weka.core.Version().isOlder("3.7.13");
 
 	private DataBuffer colorBuffer = null;
 
@@ -426,7 +426,7 @@ public class ColorBar extends JPanel {
 		
 		int numClasses = m_Instances.classAttribute().numValues();
 		int strOffset = 0;
-		if (m_Instances.classAttribute().isString() && weka_version.isOlder("3.7.13")){
+		if (m_Instances.classAttribute().isString() && wekaVersion_3_7_12_or_older){
 			strOffset = 1; // STRING ATTRIBUTE DUMMY STRING
 		}
 
@@ -683,7 +683,7 @@ public class ColorBar extends JPanel {
 			if (m_Instances != null && m_Instances.numInstances() > 0
 					&& m_Instances.numAttributes() > 0) {
 				int nClasses = m_Instances.classAttribute().numValues();
-				if (m_Instances.classAttribute().isString() && weka_version.isOlder("3.7.13")) {
+				if (m_Instances.classAttribute().isString() && wekaVersion_3_7_12_or_older) {
 					nClasses--; // Value 0 of String attributes is a Dummy String that the colorBar eliminates in versions older than 3.7.13
 				}
 				if (m_oldWidth != this.getWidth() || nClasses != this.getComponentCount()) {
@@ -725,7 +725,7 @@ public class ColorBar extends JPanel {
 				color = Color.GRAY;
 			}
 		} else {
-			if(weka_version.isOlder("3.7.13")){
+			if(wekaVersion_3_7_12_or_older){
 				value--; // Value 0 of String attributes is a Dummy String that the colorBar eliminates in versions older than 3.7.13
 			}
 			color = this.m_colorList.get((int) Math.round(value));

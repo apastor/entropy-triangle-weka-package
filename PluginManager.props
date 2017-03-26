@@ -6,4 +6,3 @@ weka.classifiers.evaluation.AbstractEvaluationMetric = \
 	weka.etplugin.metrics.RemainingPerplexity, \
 	weka.etplugin.metrics.InformationTransferFactor, \
 	weka.etplugin.metrics.VariationOfInformation
-

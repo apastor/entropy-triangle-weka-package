@@ -1,7 +1,8 @@
+
 /*
  *   This file is part of entropy-triangle-weka-package.
  *   
- *   Copyright (C) 2015  Antonio Pastor
+ *   Copyright (C) 2015-2017  Antonio Pastor
  *   
  *   This program is free software: you can redistribute it
  *   and/or modify it under the terms of the GNU General Public License as
@@ -22,11 +23,15 @@ package weka.etplugin;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectStreamClass;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +43,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.AbstractEvaluationMetric;
@@ -48,6 +57,7 @@ import weka.classifiers.evaluation.StandardEvaluationMetric;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
+import weka.core.InstanceComparator;
 import weka.core.Instances;
 import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
@@ -120,6 +130,8 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 
 	private static final long serialVersionUID = -7108681062395894449L;
 	
+	private static int PANELWIDTH = 730;
+	
 	private TernaryPlot plot;
 	private ColorBar colorBar;
 	
@@ -127,7 +139,10 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 	private JComboBox<String> currentMetric;
 	private JToggleButton toggleSplit;
 	private JToggleButton toggleBaseline; // Baseline is H(Px) line
-	private JButton ioButton;
+	private JButton saveButton;
+	private JButton loadButton;
+	private JButton helpButton;
+	private ActionListener ioListener;
 	
 	private DataInstances dataList = null;
 	private List<Baseline> bsline;
@@ -150,9 +165,10 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 				setBaseline(state);
 			}
 		});
-		ioButton = new JButton ("Load file");
-		ioButton.setActionCommand("load");
-		ioButton.addActionListener(new ActionListener() {
+		saveButton = new JButton ("Save to file");
+		saveButton.setEnabled(false);
+		saveButton.setActionCommand("save");
+		ioListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -174,7 +190,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 							AbstractFileSaver saver = fileChooser.getSaver();
 							saver.setInstances(dataList);
 							saver.writeBatch();
-						}
+						}						
 					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -182,6 +198,72 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
+			}
+		};
+		saveButton.addActionListener(ioListener);
+		loadButton = new JButton ("Load file");
+		loadButton.setActionCommand("load");
+		loadButton.addActionListener(ioListener);
+		helpButton = new JButton ("Help"); // UIManager.getIcon("OptionPane.questionIcon")
+		helpButton.addActionListener(new ActionListener() {
+			JFrame helpFrame = null;
+			final Desktop desktop = Desktop.getDesktop(); 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (helpFrame == null || ! helpFrame.isDisplayable()) {
+					JTextPane ta = new JTextPane();
+					ta.setContentType("text/html");
+					ta.addHyperlinkListener(new HyperlinkListener() {
+				        @Override
+				        public void hyperlinkUpdate(HyperlinkEvent e) {
+				            if (HyperlinkEvent.EventType.ACTIVATED == e.getEventType()) {
+				                try {
+				                    desktop.browse(e.getURL().toURI());
+				                } catch (IOException | URISyntaxException e1) {
+				                    e1.printStackTrace();
+				                }
+				            }
+				        }
+					}
+				    );
+					ta.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+//				    ta.setLineWrap(true);
+//				    ta.setWrapStyleWord(true);
+				    // ta.setBackground(getBackground());
+				    ta.setEditable(false);
+				    ta.setText("<h2>About</h2>"
+				    		+ "<p>The Entropy Triangle is an exploratory data analysis method to evaluate and compare the performance of classifiers. It represents a balance equation of entropies by means of normalized values of the variation of information, the mutual information, and the increment of entropy from the uniform distribution in a ternary plot.</p>"
+				    		+ "<p>For more information, see:</p>"
+				    		+ "<ul>"
+				    		+ "<li><p>Valverde-Albacete, F. J., &amp; Peláez-Moreno, C. (2014). <a href='http://dx.doi.org/10.1371/journal.pone.0084217'>100% classification accuracy considered harmful: The normalized information transfer factor explains the accuracy paradox.</a> PLoS ONE 9(1).</p></li>" 
+				    		+ "<br>"
+				    		+ "<li><p>Valverde-Albacete, F. J., &amp; Peláez-Moreno, C. (2010). <a href='http://dx.doi.org/10.1016/j.patrec.2010.05.017'>Two information-theoretic tools to assess the performance of multi-class classifiers.</a> Pattern Recognition Letters, Volume 31, Issue 12, 1 September 2010, Pages 1665-1671.</p></li>"
+				    		+ "</ul>"
+				    		+ "\n\n"
+				    		+ "<h2>Help</h2>"
+				    		+ "<a href='http://apastor.github.io/entropy-triangle-weka-package'>http://apastor.github.io/entropy-triangle-weka-package</a>"
+				    		);
+				    ta.setCaretPosition(0);
+				    helpFrame = new JFrame("Entropy Triangle Information"); // PropertyDialog.getParentFrame(getTopLevelAncestor()),
+				    helpFrame.addWindowListener(new WindowAdapter() {
+				      @Override
+				      public void windowClosing(WindowEvent e) {
+				        helpFrame.dispose();
+				      }
+				    });
+				    helpFrame.getContentPane().setLayout(new BorderLayout());
+				    helpFrame.getContentPane().add(new JScrollPane(ta), BorderLayout.CENTER);
+				    helpFrame.pack();
+				    helpFrame.setSize(400, 600);
+//				    helpFrame.setLocationRelativeTo(getTopLevelAncestor());
+				    helpFrame.setLocation(((JButton)e.getSource()).getTopLevelAncestor().getLocationOnScreen().x
+				      + ((JButton)e.getSource()).getTopLevelAncestor().getSize().width, ((JButton)e.getSource())
+				      .getTopLevelAncestor().getLocationOnScreen().y);
+				    helpFrame.setVisible(true);
+				}
+				else {
+					helpFrame.toFront();
 				}
 			}
 		});
@@ -199,13 +281,16 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 		buttonPanel.add(toggleSplit);
 		buttonPanel.add(toggleBaseline);
-		buttonPanel.add(ioButton);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(loadButton);
+		buttonPanel.add(helpButton);
 		
 		this.setLayout(new BorderLayout());
 		this.add(buttonPanel, BorderLayout.NORTH);
 		this.add(plotPanel, BorderLayout.CENTER);
 		this.add(colorBarPanel, BorderLayout.SOUTH);
 		this.bsline = new ArrayList<Baseline> ();
+		this.setPreferredSize(new Dimension(PANELWIDTH,PANELWIDTH));
 	}
 	
 	/**
@@ -357,9 +442,23 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 		addInstance(newInst);
 	}
 	
+	/**
+	 * Adds instances to the dataList and plot them accordingly to the current plot values.
+	 * Duplicate instances are not added to avoid having multiple times the same points.
+	 * 
+	 * @param instance the instance to add to the graph
+	 */
 	private void addInstance(Instance inst) {
 		if(dataList.add(inst)) {
 			DataInstance newInst = (DataInstance) dataList.lastInstance();
+			InstanceComparator instanceComparator = new InstanceComparator(true);
+			for (int i = 0; i<dataList.size()-1; i++){
+				Instance inList = dataList.get(i);
+				if(instanceComparator.compare(inList, newInst)==0){
+					dataList.delete(dataList.size()-1);
+					return;
+				}
+			}
 			newInst.setPopupMenus(this);
 			colorBar.addActionListener(newInst.setColorChangeListener(colorBar));
 			plot.add(newInst.joint);
@@ -415,8 +514,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 		colorBar.setInstances(null);
 		toggleSplit.setSelected(false);
 		toggleBaseline.setSelected(false);
-		ioButton.setText("Load file");
-		ioButton.setActionCommand("load");
+		saveButton.setEnabled(false);
 	}
 
 	/**
@@ -504,8 +602,7 @@ public class EntropyTrianglePanel extends PrintablePanel implements TechnicalInf
 		
 		currentMetric.setSelectedIndex(dataList.classIndex());
 		colorBar.setInstances(dataList);
-		ioButton.setText("Save data");
-		ioButton.setActionCommand("save");
+		saveButton.setEnabled(true);
 		currentMetric.addActionListener(new ActionListener() {
 			@SuppressWarnings("rawtypes")
 			@Override

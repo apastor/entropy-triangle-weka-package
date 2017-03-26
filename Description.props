@@ -4,10 +4,10 @@
 PackageName=EntropyTriangle
 
 # Version (required)
-Version=1.0
+Version=1.1
 
 #Date (year-month-day)
-Date=2015-10-01
+Date=2017-03-27
 
 # Title (required)
 Title=A set of information-theoretic tools for the assessment of classifiers
@@ -19,7 +19,7 @@ Category=Classifiers Evaluation, Visualization
 Author=Antonio Pastor
 
 # Maintainer (required)
-Maintainer=Antonio Pastor <apastorvalles.at.gmail.com>
+Maintainer=Antonio Pastor <anpastor.at.it.uc3m.es>
 
 # License (required)
 License=GPL 3.0
@@ -46,7 +46,7 @@ For more information, see: \n\
 
 # Package URL for obtaining the package archive (required)
 # direct download with redirect to latest release or static link
-PackageURL=http://github.com/apastor/entropy-triangle-weka-package/releases/download/1.0/EntropyTriangle.zip
+PackageURL=http://github.com/apastor/entropy-triangle-weka-package/releases/download/1.1/EntropyTriangle.zip
 
 # URL for further information
 URL=http://apastor.github.io/entropy-triangle-weka-package/

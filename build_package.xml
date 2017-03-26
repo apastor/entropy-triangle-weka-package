@@ -11,12 +11,12 @@
 
       
   <presetdef name="my.javac">
-    <javac includeantruntime="false" 
+    <javac source="1.7" target="1.7"
+            includeantruntime="false" 
             fork="yes" memoryMaximumSize="${javac_max_memory}"
             optimize="${optimization}"
             debug="${debug}"
-            deprecation="${deprecation}"
-            source="1.7" target="1.7" />
+            deprecation="${deprecation}"/>
   </presetdef>
 
   <!-- set global properties for this build -->

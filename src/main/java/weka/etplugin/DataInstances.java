@@ -101,10 +101,32 @@ public class DataInstances extends Instances {
 	 */
 	@Override
 	public boolean add(/* @non_null@ */Instance instance) {
-		DataInstance newInstance = new DataInstance(this, (Instance)instance.copy());
+		DataInstance newInstance;
+		Instances inst_dataset = instance.dataset();
+		if (inst_dataset!=null){
+			double[] inst_values = new double[this.numAttributes()];
+			for (int idx = 0; idx<inst_values.length; idx++){
+				Attribute atr = this.attribute(idx);
+				if (atr.isString()){
+					inst_values[idx] = atr.addStringValue(inst_dataset.attribute(atr.name()), (int) instance.value(atr));
+				} else {
+					inst_values[idx] = instance.value(inst_dataset.attribute(atr.name()));
+				}
+			}
+			newInstance = new DataInstance(this, 1.0, inst_values);
+		} else {
+			newInstance = new DataInstance(this, (Instance)instance.copy());
+		}
 		m_Instances.add(newInstance);
 		return true;
 	}
+//	@Override
+//	public boolean add(/* @non_null@ */Instance instance) {
+//		DataInstance newInstance = new DataInstance(this, (Instance)instance.copy());
+//		
+//		m_Instances.add(newInstance);
+//		return true;
+//	}
 	
 	@Override
 	public boolean remove(Object o) {

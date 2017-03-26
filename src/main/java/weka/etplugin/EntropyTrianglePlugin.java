@@ -1,7 +1,7 @@
 /*
  *   This file is part of entropy-triangle-weka-package.
  *   
- *   Copyright (C) 2015  Antonio Pastor
+ *   Copyright (C) 2015-2017  Antonio Pastor
  *   
  *   This program is free software: you can redistribute it
  *   and/or modify it under the terms of the GNU General Public License as
@@ -18,7 +18,7 @@
  *   If not, see <http://www.gnu.org/licenses/>.
  */
 
-package weka.gui.visualize.plugins;
+package weka.etplugin;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -42,9 +42,9 @@ import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
 import weka.core.TechnicalInformationHandler;
-import weka.etplugin.EntropyTrianglePanel;
 import weka.gui.MainMenuExtension;
 import weka.gui.ResultHistoryPanel;
+import weka.gui.visualize.plugins.ErrorVisualizePlugin;
 
 /**
  * This class acts as a launcher for the Entropy Triangle Plugin from the visualization plugin context menu of the Weka explorer 
@@ -122,7 +122,6 @@ public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExte
 					for (Instance i: instances) {
 						ev.evaluateModelOnce(i.value(classIndex-1), i);
 					}
-//					System.out.println(ev.toSummaryString());
 				} catch (Exception e1) {
 					System.out.println("Error evaluating predictions, can't generate plot");
 					e1.printStackTrace();
@@ -165,7 +164,7 @@ public class EntropyTrianglePlugin implements ErrorVisualizePlugin, MainMenuExte
 	 */
 	@Override
 	public String getMaxVersion() {
-		return "3.7.12";
+		return "3.9.2";
 	}
 
 	/**
